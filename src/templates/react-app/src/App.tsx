@@ -1,116 +1,139 @@
 import React from 'react';
 
 // ---------------------------------------------------------------------------
-// Katana — hand-drawn SVG, laid diagonally across the scene like a still
-// frame after the cut has already landed.
+// Katana — Redrawn with precise, rigid geometry to look unmistakably like
+// a warrior's sword (slight upward curve, flat handle, distinct guard).
 // ---------------------------------------------------------------------------
-
 function Katana() {
   return (
     <svg
-      viewBox="0 0 640 160"
+      viewBox="0 0 1000 100"
       style={{
         position: 'absolute',
         top: '50%',
         left: '50%',
-        width: 'min(140vw, 1100px)',
-        transform: 'translate(-50%, -50%) rotate(-8deg)',
-        opacity: 0.16,
-        filter: 'drop-shadow(0 0 40px rgba(255,255,255,0.08))',
+        width: 'min(160vw, 1400px)',
+        transform: 'translate(-50%, -50%) rotate(-15deg)',
         pointerEvents: 'none',
+        zIndex: 0,
+        opacity: 0.45,
+        filter: 'drop-shadow(0 20px 30px rgba(0,0,0,0.8))',
       }}
       xmlns="http://www.w3.org/2000/svg"
     >
-      {/* blade */}
-      <path
-        d="M20 92 C 140 78, 320 66, 470 56 C 500 54, 520 50, 536 42 L 560 30"
-        stroke="#e5e7eb"
-        strokeWidth="6"
-        fill="none"
-        strokeLinecap="round"
-      />
-      {/* blade highlight */}
-      <path
-        d="M24 88 C 150 75, 320 63, 468 53"
-        stroke="#f8fafc"
-        strokeWidth="1.5"
-        fill="none"
-        opacity="0.6"
-      />
-      {/* tip */}
-      <path d="M536 42 L 560 30 L 546 52 Z" fill="#e5e7eb" />
-      {/* habaki (collar) */}
-      <rect x="14" y="86" width="16" height="14" rx="1" fill="#9ca3af" transform="rotate(-6 22 93)" />
-      {/* tsuba (guard) */}
-      <ellipse cx="0" cy="98" rx="14" ry="22" fill="#111318" stroke="#6b7280" strokeWidth="2" />
-      {/* tsuka (handle) */}
-      <path
-        d="M-10 90 C -50 96, -95 104, -132 112"
-        stroke="#1c1f26"
-        strokeWidth="14"
-        strokeLinecap="round"
-      />
-      {/* handle wrap ito pattern */}
-      {Array.from({ length: 7 }).map((_, i) => (
-        <line
+      <defs>
+        <linearGradient id="blade-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stopColor="#d1d5db" />
+          <stop offset="40%" stopColor="#f8fafc" />
+          <stop offset="60%" stopColor="#94a3b8" />
+          <stop offset="100%" stopColor="#334155" />
+        </linearGradient>
+        <linearGradient id="handle-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stopColor="#111" />
+          <stop offset="50%" stopColor="#333" />
+          <stop offset="100%" stopColor="#000" />
+        </linearGradient>
+      </defs>
+
+      {/* Tsuka (Handle) */}
+      <rect x="100" y="44" width="140" height="16" rx="2" fill="url(#handle-gradient)" />
+      
+      {/* Handle Wrap Texture (Ito) */}
+      {Array.from({ length: 9 }).map((_, i) => (
+        <path
           key={i}
-          x1={-18 - i * 16}
-          y1={91 + i * 3}
-          x2={-30 - i * 16}
-          y2={104 + i * 3}
-          stroke="#4b5563"
-          strokeWidth="2"
+          d={`M${105 + i * 15} 44 L${115 + i * 15} 60 M${115 + i * 15} 44 L${105 + i * 15} 60`}
+          stroke="#000"
+          strokeWidth="1.5"
+          opacity="0.8"
         />
       ))}
-      {/* pommel */}
-      <circle cx="-134" cy="113" r="7" fill="#6b7280" />
+
+      {/* Pommel (Kashira) */}
+      <rect x="94" y="43" width="8" height="18" rx="2" fill="#0f172a" stroke="#475569" strokeWidth="1" />
+
+      {/* Tsuba (Guard) */}
+      <rect x="240" y="34" width="8" height="36" rx="3" fill="#0f172a" stroke="#475569" strokeWidth="1.5" />
+
+      {/* Habaki (Collar) */}
+      <rect x="248" y="45" width="18" height="14" fill="#475569" />
+
+      {/* Blade - Solid geometric shape with a subtle, realistic curve */}
+      <path
+        d="M266 45 Q 600 40 940 32 L 965 42 L 920 54 Q 600 50 266 57 Z"
+        fill="url(#blade-gradient)"
+      />
+
+      {/* Bo-hi (Blood Groove / Fuller) */}
+      <path
+        d="M270 48 Q 600 44 880 39"
+        stroke="#1e293b"
+        strokeWidth="2.5"
+        fill="none"
+        opacity="0.7"
+        strokeLinecap="round"
+      />
     </svg>
   );
 }
 
 // ---------------------------------------------------------------------------
-// Ambient ash — a handful of drifting motes for atmosphere, respects
-// prefers-reduced-motion.
+// Crimson Leaves — Vibrant red maple/autumn leaves cutting through the gray.
 // ---------------------------------------------------------------------------
-
-function Ash() {
-  const motes = Array.from({ length: 14 });
+function CrimsonLeaves() {
+  const leaves = Array.from({ length: 24 });
   return (
-    <div style={{ position: 'absolute', inset: 0, overflow: 'hidden', pointerEvents: 'none' }}>
-      {motes.map((_, i) => {
-        const left = (i * 37) % 100;
-        const delay = (i * 1.7) % 9;
-        const duration = 9 + (i % 5) * 1.6;
-        const size = 2 + (i % 3);
+    <div style={{ position: 'absolute', inset: 0, overflow: 'hidden', pointerEvents: 'none', zIndex: 1 }}>
+      {leaves.map((_, i) => {
+        const left = (i * 17) % 100;
+        const delay = (i * 0.7) % 12;
+        const duration = 6 + (i % 6) * 1.5;
+        const size = 12 + (i % 5) * 8;
+        const rotationStart = (i * 45) % 360;
+        
+        // Blur leaves in the foreground/background for depth of field
+        const blurAmount = i % 4 === 0 ? 'blur(3px)' : i % 5 === 0 ? 'blur(1px)' : 'none';
+
         return (
-          <span
+          <svg
             key={i}
-            className="ash-mote"
+            className="crimson-leaf"
+            width={size}
+            height={size}
+            viewBox="0 0 24 24"
             style={{
               left: `${left}%`,
-              width: size,
-              height: size,
               animationDelay: `${delay}s`,
               animationDuration: `${duration}s`,
-            }}
-          />
+              fill: '#dc2626', // Vibrant Blood Red
+              filter: `drop-shadow(0 4px 6px rgba(0,0,0,0.4)) ${blurAmount}`,
+              '--rot-start': `${rotationStart}deg`,
+              '--rot-end': `${rotationStart + 540}deg`,
+            } as React.CSSProperties}
+          >
+            {/* Maple Leaf Path */}
+            <path d="M11.4 1.5c-.2-.4-.8-.4-1 0L8.6 6 4 5c-.4-.1-.7.2-.6.5l1.6 4.3-4.5 1.5c-.4.1-.5.7-.1 1l4.2 2.6-2 5c-.1.4.3.7.7.5l4.5-2.8 2.6 4.4c.2.4.8.4 1 0l2.6-4.4 4.5 2.8c.4.2.8-.1.7-.5l-2-5 4.2-2.6c.4-.3.3-.9-.1-1l-4.5-1.5 1.6-4.3c.1-.4-.2-.7-.6-.5l-4.6 1L11.4 1.5z" />
+          </svg>
         );
       })}
     </div>
   );
 }
 
+// ---------------------------------------------------------------------------
+// Main Application - Cinematic Grayscale with Red Accents
+// ---------------------------------------------------------------------------
 function App() {
   return (
     <div
       style={{
         position: 'relative',
-        fontFamily: "'Georgia', 'Iowan Old Style', 'Noto Serif', serif",
+        fontFamily: "'Cinzel', 'Georgia', serif",
         padding: '4rem 2rem',
         textAlign: 'center',
-        background:
-          'radial-gradient(ellipse at 50% 30%, #1a1a1c 0%, #0a0a0b 55%, #050505 100%)',
-        color: '#e5e7eb',
+        // Moody gradient: Dark stormy sky fading into the white pampas grass field
+        background: 'linear-gradient(180deg, #09090b 0%, #18181b 40%, #52525b 70%, #e4e4e7 100%)',
+        color: '#f8fafc',
         minHeight: '100vh',
         display: 'flex',
         flexDirection: 'column',
@@ -120,115 +143,137 @@ function App() {
       }}
     >
       <style>{`
-        @keyframes drift {
-          0%   { transform: translateY(0) translateX(0); opacity: 0; }
-          10%  { opacity: 0.5; }
-          90%  { opacity: 0.35; }
-          100% { transform: translateY(-100vh) translateX(20px); opacity: 0; }
+        /* Cinematic wind-swept leaf animation */
+        @keyframes driftAndSpin {
+          0% { 
+            transform: translateY(-10vh) translateX(-5vw) rotate(var(--rot-start)) scale(1); 
+            opacity: 0; 
+          }
+          10% { opacity: 1; }
+          90% { opacity: 1; }
+          100% { 
+            transform: translateY(110vh) translateX(25vw) rotate(var(--rot-end)) scale(0.7); 
+            opacity: 0; 
+          }
         }
-        .ash-mote {
+        .crimson-leaf {
           position: absolute;
-          bottom: -10px;
-          background: #9ca3af;
-          border-radius: 50%;
-          animation-name: drift;
-          animation-timing-function: linear;
+          top: -30px;
+          animation-name: driftAndSpin;
+          animation-timing-function: cubic-bezier(0.35, 0, 0.25, 1);
           animation-iteration-count: infinite;
         }
-        @keyframes riseIn {
-          from { opacity: 0; transform: translateY(14px); }
-          to   { opacity: 1; transform: translateY(0); }
+
+        /* Slow cinematic text reveals */
+        @keyframes fadeUp {
+          from { opacity: 0; transform: translateY(20px); filter: blur(4px); }
+          to   { opacity: 1; transform: translateY(0); filter: blur(0); }
         }
-        .rise-1 { animation: riseIn 0.7s ease-out both; }
-        .rise-2 { animation: riseIn 0.7s ease-out 0.15s both; }
-        .rise-3 { animation: riseIn 0.7s ease-out 0.3s both; }
-        .rise-4 { animation: riseIn 0.7s ease-out 0.45s both; }
+        .cinematic-reveal-1 { animation: fadeUp 1.2s ease-out 0.2s both; }
+        .cinematic-reveal-2 { animation: fadeUp 1.2s ease-out 0.6s both; }
+        .cinematic-reveal-3 { animation: fadeUp 1.2s ease-out 1.0s both; }
+
         @media (prefers-reduced-motion: reduce) {
-          .ash-mote { animation: none; opacity: 0.25; }
-          .rise-1, .rise-2, .rise-3, .rise-4 { animation: none; opacity: 1; }
+          .crimson-leaf { animation: none; opacity: 0.6; top: 50%; }
+          .cinematic-reveal-1, .cinematic-reveal-2, .cinematic-reveal-3 { 
+            animation: none; opacity: 1; filter: none; transform: none; 
+          }
         }
       `}</style>
 
-      <Katana />
-      <Ash />
-
-      {/* vignette edge */}
+      {/* Atmospheric dark vignette */}
       <div
         style={{
           position: 'absolute',
           inset: 0,
-          boxShadow: 'inset 0 0 220px rgba(0,0,0,0.75)',
+          boxShadow: 'inset 0 0 250px rgba(0,0,0,0.85)',
           pointerEvents: 'none',
+          zIndex: 1,
         }}
       />
 
-      <div style={{ position: 'relative', zIndex: 1, maxWidth: 640 }}>
+      <Katana />
+      <CrimsonLeaves />
+
+      <div style={{ position: 'relative', zIndex: 10, maxWidth: 700 }}>
         <p
-          className="rise-1"
+          className="cinematic-reveal-1"
           style={{
             fontFamily: "'Courier New', monospace",
-            letterSpacing: '0.35em',
+            letterSpacing: '0.4em',
             textTransform: 'uppercase',
-            fontSize: '0.75rem',
-            color: '#9ca3af',
-            marginBottom: '1.25rem',
+            fontSize: '0.8rem',
+            color: '#a1a1aa',
+            marginBottom: '1.5rem',
+            textShadow: '0 2px 4px rgba(0,0,0,0.8)',
           }}
         >
-          The cut is made
+          The storm approaches
         </p>
 
         <h1
-          className="rise-2"
+          className="cinematic-reveal-2"
           style={{
-            fontSize: 'clamp(2.5rem, 6vw, 4rem)',
-            lineHeight: 1.05,
-            margin: 0,
-            marginBottom: '0.5rem',
-            color: '#f8fafc',
-            letterSpacing: '0.02em',
+            fontSize: 'clamp(3rem, 7vw, 5rem)',
+            lineHeight: 1.1,
+            margin: '0 0 1rem 0',
+            color: '#ffffff',
+            textTransform: 'uppercase',
+            letterSpacing: '0.05em',
+            fontWeight: 400,
+            textShadow: '0 4px 20px rgba(0,0,0,0.9), 0 1px 3px rgba(0,0,0,0.5)',
           }}
         >
-          Your Stack Is Forged
+          Your Stack <br />Is Forged
         </h1>
 
         <div
-          className="rise-2"
+          className="cinematic-reveal-2"
           style={{
-            width: 64,
+            width: 120,
             height: 2,
-            background: 'linear-gradient(90deg, transparent, #6b7280, transparent)',
-            margin: '1.5rem auto',
+            background: 'linear-gradient(90deg, transparent, #dc2626, transparent)',
+            margin: '2rem auto',
           }}
         />
 
         <p
-          className="rise-3"
+          className="cinematic-reveal-3"
           style={{
-            fontSize: '1.125rem',
-            color: '#a1a1aa',
-            lineHeight: 1.7,
-            maxWidth: 520,
+            fontSize: '1.15rem',
+            color: '#d4d4d8',
+            lineHeight: 1.8,
+            maxWidth: 540,
             margin: '0 auto',
+            fontFamily: "sans-serif",
+            fontWeight: 300,
+            textShadow: '0 2px 8px rgba(0,0,0,0.8)',
           }}
         >
           The project has been scaffolded in one clean stroke. Return to your
-          terminal to confirm your providers connected — no wasted motion, no
-          second swing.
+          terminal to confirm your providers connected. The path forward is clear.
         </p>
 
         <div
-          className="rise-4"
+          className="cinematic-reveal-3"
           style={{
-            marginTop: '2.5rem',
-            padding: '1rem 1.5rem',
-            background: '#111114',
-            borderRadius: '2px',
-            border: '1px solid #2a2a2e',
+            marginTop: '3.5rem',
+            padding: '1rem 2rem',
+            background: 'rgba(9, 9, 11, 0.6)',
+            backdropFilter: 'blur(4px)',
+            border: '1px solid rgba(82, 82, 91, 0.4)',
+            borderLeft: '4px solid #dc2626',
             display: 'inline-block',
+            boxShadow: '0 10px 30px rgba(0,0,0,0.5)',
           }}
         >
-          <code style={{ color: '#d4d4d8', fontFamily: "'Courier New', monospace", fontSize: '0.95rem' }}>
-            Edit src/App.tsx to get started
+          <code style={{ 
+            color: '#e4e4e7', 
+            fontFamily: "'Courier New', monospace", 
+            fontSize: '0.95rem',
+            letterSpacing: '0.05em'
+          }}>
+            Edit <span style={{ color: '#dc2626' }}>src/App.tsx</span> to begin
           </code>
         </div>
       </div>
