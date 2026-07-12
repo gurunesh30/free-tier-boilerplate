@@ -1,17 +1,32 @@
 {
-  "name": "free-tier-boilerplate",
+  "name": "jin-sakai-bpt",
   "version": "1.0.0",
-  "description": "Interactive CLI to generate SaaS boilerplate applications.",
+  "description": "Interactive CLI to scaffold a production-ready SaaS project with free-tier provider integrations.",
   "type": "module",
   "main": "./dist/index.js",
   "bin": {
     "jin-sakai-bpt": "./dist/index.js"
   },
+  "files": [
+    "dist",
+    "src/templates"
+  ],
   "scripts": {
     "build": "tsc && chmod +x dist/index.js",
-    "dev": "tsx src/index.ts"
+    "dev": "tsx src/index.ts",
+    "prepublishOnly": "npm run build"
   },
-  "keywords": [],
+  "keywords": [
+    "cli",
+    "saas",
+    "boilerplate",
+    "scaffold",
+    "react",
+    "vite",
+    "supabase",
+    "stripe",
+    "mongodb"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {
