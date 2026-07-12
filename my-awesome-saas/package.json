@@ -6,8 +6,7 @@
   "scripts": {
     "dev": "node scripts/check-env.js && vite",
     "build": "tsc && vite build",
-    "preview": "vite preview",
-    "check": "node scripts/check-env.js"
+    "preview": "vite preview"
   },
   "dependencies": {
     "mongodb": "^6.13.0",

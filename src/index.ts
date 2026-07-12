@@ -204,6 +204,7 @@ async function main() {
   const nextSteps = [
     `${color.dim('$')} cd ${projectName}`,
     `${color.dim('$')} npm install`,
+    `${color.dim('$')} npm run check`,
     `${color.dim('$')} npm run dev`,
   ].join('\n');
 

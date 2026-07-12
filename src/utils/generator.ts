@@ -27,7 +27,8 @@ export async function generateProject(projectName: string, providers: string[]) 
       private: true,
       type: "module",
       scripts: {
-        "dev": "node scripts/check-env.js && vite"
+        "dev": "node scripts/check-env.js && vite",
+        "check": "node scripts/check-env.js"
       },
       dependencies: {
         "mongodb": "^6.13.0"
