@@ -11,9 +11,8 @@
     "dist",
     "src/templates"
   ],
-  "scripts": {
-    "build": "tsc && chmod +x dist/index.js",
-    "dev": "tsx src/index.ts",
+ "scripts": {
+    "build": "tsc --module NodeNext --moduleResolution NodeNext",
     "prepublishOnly": "npm run build"
   },
   "keywords": [
